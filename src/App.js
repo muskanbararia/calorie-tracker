@@ -4,14 +4,14 @@ import Header from "./Components/Header";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { useEffect, useState } from "react";
-function LoginPage() {
+function LoginPage({ setLogin }) {
   return (
     <div className="w-full">
       <Header />
 
       <div class="md:flex mt-10">
         <div class=" md:flex-1">
-          <Login />
+          <Login setLogin={setLogin} />
         </div>
         <div class="hidden md:block md:flex-1">
           <div className=" flex justify-end items-center">
@@ -25,17 +25,23 @@ function LoginPage() {
 
 function App() {
   // check if token in local storage
+  const [login, setLogin] = useState(false);
   const [token, setToken] = useState("");
   let isValidToken = (token) => {
     return token && token != "";
   };
   useEffect(() => {
     let token = localStorage.getItem("token");
+
     if (isValidToken(token)) {
       setToken(token);
     }
-  });
-  return isValidToken(token) ? <Home token={token} /> : <LoginPage />;
+  }, [login]);
+  return isValidToken(token) ? (
+    <Home token={token} />
+  ) : (
+    <LoginPage setLogin={setLogin} />
+  );
 }
 
 export default App;

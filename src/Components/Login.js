@@ -1,8 +1,41 @@
 import { useState } from "react";
 
-function LoginSection() {
+function LoginSection({ setLogin }) {
+  async function postData(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+  const login = () => {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    var data = { email, password };
+    postData("https://fitness-tracker111.herokuapp.com/api/auth", data).then(
+      (data) => {
+        if (data && data.data) {
+          console.log(setLogin);
+          localStorage.setItem("token", data.data);
+          setLogin(true);
+        } else {
+          alert("Something went wrong.");
+        }
+      }
+    );
+  };
   return (
-    <form className="pt-5">
+    <div className="pt-5">
       <div class="mb-6 ">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-300">
           Your email
@@ -29,7 +62,7 @@ function LoginSection() {
           required
         />
       </div>
-      <div class="flex items-start mb-6">
+      {/* <div class="flex items-start mb-6">
         <div class="flex items-center h-5">
           <input
             id="remember"
@@ -42,19 +75,81 @@ function LoginSection() {
         <label for="remember" class="ml-2 text-sm font-medium text-gray-300">
           Remember me
         </label>
-      </div>
+      </div> */}
       <button
         type="submit"
+        onClick={(_) => login()}
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
       >
         Log in
       </button>
-    </form>
+    </div>
   );
 }
 function SignUpSection() {
+  async function postData(url = "", data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+  const signin = () => {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    var data = { email, password, firstName, lastName };
+    postData("https://fitness-tracker111.herokuapp.com/api/users", data).then(
+      (data) => {
+        if (
+          data &&
+          data.message &&
+          data.message == "User created successfully"
+        ) {
+          alert("User Created. Login to continue");
+        } else {
+          alert(data.message ? data.message : "Something went wrong");
+        }
+      }
+    );
+  };
   return (
-    <form className="pt-5">
+    <div className="pt-5">
+      <div class="mb-6 ">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-300">
+          Your First Name
+        </label>
+        <input
+          type="text"
+          id="firstName"
+          class=" border   text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          placeholder="name@flowbite.com"
+          required
+        />
+      </div>
+      <div class="mb-6 ">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-300">
+          Your Last Name
+        </label>
+        <input
+          type="text"
+          id="lastName"
+          class=" border   text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          placeholder="name@flowbite.com"
+          required
+        />
+      </div>
       <div class="mb-6 ">
         <label for="email" class="block mb-2 text-sm font-medium text-gray-300">
           Your email
@@ -81,33 +176,21 @@ function SignUpSection() {
           required
         />
       </div>
-      <div class="mb-6">
-        <label
-          for="password"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
-          Repeat password
-        </label>
-        <input
-          type="password"
-          id="password"
-          class=" border   text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-          required
-        />
-      </div>
 
       <button
         type="submit"
+        onClick={(_) => signin()}
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
       >
         Sign Up
       </button>
-    </form>
+    </div>
   );
 }
 
-function Login() {
+function Login({ setLogin }) {
   const [activeTab, setActiveTab] = useState("login");
+  console.log("se", setLogin);
 
   return (
     <div className="flex  w-full justify-center items-center">
@@ -137,7 +220,11 @@ function Login() {
               </span>
             </li>
           </ul>
-          {activeTab == "login" ? <LoginSection /> : <SignUpSection />}
+          {activeTab == "login" ? (
+            <LoginSection setLogin={setLogin} />
+          ) : (
+            <SignUpSection />
+          )}
         </div>
       </div>
     </div>
