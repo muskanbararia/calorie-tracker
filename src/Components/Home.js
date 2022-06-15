@@ -76,7 +76,7 @@ function Home({ token }) {
   return (
     <div className="w-full">
       <Header />
-      <div className="flex  w-full justify-center items-center">
+      <div className="flex mt-10 sm:mr-10 sm:ml-10 w-full justify-center items-center">
         {view === "form" ? (
           <div className=" p-20 border-gray-200 rounded-lg  bg-gray-800 ">
             <h1 className="font-lg text-lg border border-white rounded-lg p-4 text-white">
@@ -336,13 +336,13 @@ function Home({ token }) {
             </form>
           </div>
         ) : (
-          <div>
+          <div className="home">
             <div className=" p-20 border-gray-200 rounded-lg  bg-gray-800 ">
               <h1 className="font-lg text-lg border border-white rounded-lg p-4 text-white">
                 Your Total Calories are 1500.
               </h1>
 
-              <div class="relative m-10 overflow-x-auto shadow-md sm:rounded-lg">
+              <div class="hidden md:block relative m-10 overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -409,7 +409,7 @@ function Home({ token }) {
                 </table>
               </div>
 
-              <h1 className="font-lg text-lg border border-white rounded-lg p-4 text-white">
+              <h1 className="mt-5 font-lg text-lg border border-white rounded-lg p-4 text-white">
                 Your Breakfast Calories are 300.
               </h1>
               <div

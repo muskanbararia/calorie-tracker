@@ -9,7 +9,7 @@ function LoginPage() {
     <div className="w-full">
       <Header />
 
-      <div class="md:flex ">
+      <div class="md:flex mt-10">
         <div class=" md:flex-1">
           <Login />
         </div>

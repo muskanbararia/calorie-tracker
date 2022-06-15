@@ -13,6 +13,13 @@ form {
     width: auto;
   }
 }
+@media all and (min-width: 960px) and (max-width: 1024px) {
+  /* put your css styles in here */
+  #home {
+    width: 400px;
+  }
+}
+
 #chart {
   max-width: 100px;
   max-height: 100px;
